@@ -9,8 +9,10 @@ import java.awt.event.ActionListener;
  */
 public class WelcomeFrame extends JFrame {
 
-    private String[] bookTableColumns = {"Title"};
-    private Object[][] books = {{"Java Head First"}, {"Test-Driven Development by Example"}, {"The Agile Samurai"}};
+    private String[] bookTableColumns = {"Title", "Author(s)", "Year"};
+    private Object[][] books = {{"Java Head First", "Bert Bates, Kathy Sierra", "2003"},
+            {"Test-Driven Development by Example", "Kent Beck", "2003"},
+            {"The Agile Samurai","Jonathan Rasmusson" ,"2010"}};
     private JTable bookTable;
     private JScrollPane bookTableScrollPane;
 
@@ -37,8 +39,8 @@ public class WelcomeFrame extends JFrame {
 
     public JFrame createBooksFrame() {
         JFrame booksFrame = new JFrame();
-        booksFrame.setSize(300,200);
-        booksFrame.setLocation(400,200);
+        booksFrame.setSize(500,200);
+        booksFrame.setLocation(450,250);
         booksFrame.setVisible(true);
 
         return booksFrame;
