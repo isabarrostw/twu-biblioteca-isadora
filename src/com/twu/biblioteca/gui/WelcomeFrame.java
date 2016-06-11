@@ -18,8 +18,8 @@ public class WelcomeFrame extends JFrame {
     private Vector<Vector<String>> checkedOutBooks;
     private JTable bookTable;
     private JScrollPane bookTableScrollPane;
+    private JFrame booksFrame;
     private JFrame checkoutFrame;
-    private JTextField bookTitleTextField;
 
     public WelcomeFrame() {
         setSize(600,400);
@@ -53,11 +53,12 @@ public class WelcomeFrame extends JFrame {
         add(welcomeLabel);
         initializeBookTable();
         initializeMenu();
+        booksFrame = initializeFrame(450, 250, 500, 200);
         checkoutFrame = initializeFrame(500, 300, 450, 100);
 
         JPanel panel = new JPanel();
         JLabel bookTitleLabel = new JLabel("Book title: ");
-        bookTitleTextField = new JTextField(30);
+        final JTextField bookTitleTextField = new JTextField(30);
         bookTitleTextField.setMinimumSize(new Dimension(100, 40));
         JButton checkoutButton = new JButton("CHECKOUT");
         checkoutButton.addActionListener(new ActionListener() {
@@ -94,16 +95,8 @@ public class WelcomeFrame extends JFrame {
         bookTableScrollPane = new JScrollPane(bookTable);
 
         bookTable.setFillsViewportHeight(true);
-        createBooksFrame().add(bookTableScrollPane);
-    }
-
-    public JFrame createBooksFrame() {
-        JFrame booksFrame = new JFrame();
-        booksFrame.setSize(500,200);
-        booksFrame.setLocation(450,250);
+        booksFrame.add(bookTableScrollPane);
         booksFrame.setVisible(true);
-
-        return booksFrame;
     }
 
     public JFrame initializeFrame(int x, int y, int width, int length) {
