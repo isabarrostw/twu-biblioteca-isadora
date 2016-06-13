@@ -68,7 +68,7 @@ public class Data {
 
     public void returnBook(String bookName) throws BookNotFoundException {
         try {
-            swapBookToVector(bookName, books, checkedOutBooks);
+            swapBookToVector(bookName, checkedOutBooks, books);
         } catch (BookNotFoundException e) {
             throw e;
         }

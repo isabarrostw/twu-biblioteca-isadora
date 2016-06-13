@@ -18,6 +18,7 @@ public class WelcomeFrame extends JFrame {
     private JScrollPane bookTableScrollPane;
     private JFrame booksFrame;
     private JFrame checkoutFrame;
+    private JFrame returnFrame;
     private Data data;
 
     public WelcomeFrame(Data data) {
@@ -32,8 +33,11 @@ public class WelcomeFrame extends JFrame {
         add(welcomeLabel);
         initializeMenu();
         booksFrame = initializeFrame(450, 250, 500, 200);
-        checkoutFrame = initializeFrame(500, 300, 450, 100);
-        checkoutFrame.add(checkoutPanel());
+        checkoutFrame = initializeFrame(500, 300, 450, 120);
+        returnFrame = initializeFrame(500, 300, 450, 120);
+        checkoutFrame.add(bookManagementPanel("CHECKOUT", "Thank you! Enjoy the book", "That book is not available."));
+        returnFrame.add(bookManagementPanel("RETURN", "Thank you for returning the book.",
+                "That is not a valid book to return."));
     }
 
     public void showBooksTable() {
@@ -52,22 +56,26 @@ public class WelcomeFrame extends JFrame {
         return frame;
     }
 
-    public JPanel checkoutPanel() {
+    public JPanel bookManagementPanel(final String action, final String successMessage, final String failureMessage) {
         final JPanel panel = new JPanel();
         JLabel bookTitleLabel = new JLabel("Book title: ");
         final JTextField bookTitleTextField = new JTextField(30);
         bookTitleTextField.setMinimumSize(new Dimension(100, 40));
-        JButton checkoutButton = new JButton("CHECKOUT");
+        JButton checkoutButton = new JButton(action);
 
         checkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    data.checkoutBook(bookTitleTextField.getText());
-                    showMessageDialog(panel, "Thank you! Enjoy the book");
+                    if(action.equals("CHECKOUT")) {
+                        data.checkoutBook(bookTitleTextField.getText());
+                    } else if(action.equals("RETURN")) {
+                        data.returnBook(bookTitleTextField.getText());
+                    }
+                    showMessageDialog(panel, successMessage);
                     bookTitleTextField.setText("");
                 } catch (BookNotFoundException exp) {
-                    showMessageDialog(panel, "That book is not available.");
+                    showMessageDialog(panel, failureMessage);
                 }
             }
         });
@@ -85,6 +93,7 @@ public class WelcomeFrame extends JFrame {
         JMenuItem menuQuit = new JMenuItem("Quit");
         JMenu menuManageBooks = new JMenu("Manage Books");
         JMenuItem menuCheckout = new JMenuItem("Checkout Book");
+        JMenuItem menuReturn = new JMenuItem("Return Book");
 
         menuAll.addActionListener(new ActionListener() {
             @Override
@@ -104,10 +113,17 @@ public class WelcomeFrame extends JFrame {
                 checkoutFrame.setVisible(true);
             }
         });
+        menuReturn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                returnFrame.setVisible(true);
+            }
+        });
 
         menuListBooks.add(menuAll);
         menuListBooks.add(menuQuit);
         menuManageBooks.add(menuCheckout);
+        menuManageBooks.add(menuReturn);
         menuBar.add(menuListBooks);
         menuBar.add(menuManageBooks);
 
