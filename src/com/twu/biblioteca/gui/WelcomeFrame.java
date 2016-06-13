@@ -64,6 +64,7 @@ public class WelcomeFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     data.checkoutBook(bookTitleTextField.getText());
+                    showMessageDialog(panel, "Thank you! Enjoy the book");
                 } catch (BookNotFoundException exp) {
                     showMessageDialog(panel, exp.getMessage());
                 }
