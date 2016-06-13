@@ -1,11 +1,14 @@
 package com.twu.biblioteca.gui;
 
 import com.twu.biblioteca.business.Data;
+import com.twu.biblioteca.exceptions.BookNotFoundException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Created by ibarros on 6/9/16.
@@ -50,7 +53,7 @@ public class WelcomeFrame extends JFrame {
     }
 
     public JPanel checkoutPanel() {
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         JLabel bookTitleLabel = new JLabel("Book title: ");
         final JTextField bookTitleTextField = new JTextField(30);
         bookTitleTextField.setMinimumSize(new Dimension(100, 40));
@@ -59,7 +62,12 @@ public class WelcomeFrame extends JFrame {
         checkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                data.checkoutBook(bookTitleTextField.getText());
+                try {
+                    data.checkoutBook(bookTitleTextField.getText());
+                } catch (BookNotFoundException exp) {
+                    showMessageDialog(panel, exp.getMessage());
+                }
+
                 bookTitleTextField.setText("");
             }
         });

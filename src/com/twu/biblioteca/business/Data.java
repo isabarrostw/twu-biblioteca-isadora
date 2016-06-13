@@ -1,5 +1,7 @@
 package com.twu.biblioteca.business;
 
+import com.twu.biblioteca.exceptions.BookNotFoundException;
+
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -56,7 +58,7 @@ public class Data {
         this.checkedOutBooks = checkedOutBooks;
     }
 
-    public void checkoutBook(String bookName) {
+    public void checkoutBook(String bookName) throws BookNotFoundException {
         Iterator<Vector<String>> iterator = books.iterator();
 
         boolean elementNotFound = true;
@@ -73,6 +75,11 @@ public class Data {
                 elementNotFound = false;
             }
         }
-        books.remove(bookToRemove);
+
+        if(elementNotFound) {
+            throw new BookNotFoundException("That book is not available.");
+        } else {
+            books.remove(bookToRemove);
+        }
     }
 }
