@@ -50,7 +50,7 @@ public class Book {
         this.checkedOut = checkedOut;
     }
 
-    public Vector<String> bookAttributes() {
+    public Vector<String> toVector() {
         Vector<String> attributesVector = new Vector<String>();
 
         attributesVector.add(title);

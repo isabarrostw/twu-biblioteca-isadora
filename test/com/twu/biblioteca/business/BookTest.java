@@ -13,7 +13,7 @@ public class BookTest {
     @Test
     public void testGetTitle() {
         Book book = new Book("Open Veins of Latin America", "Eduardo Galeano", "1971");
-        assertEquals(book.getTitle(), "Open Veins of Latin America");
+        assertEquals("Open Veins of Latin America", book.getTitle());
     }
 
     @Test
@@ -21,13 +21,13 @@ public class BookTest {
         Book book = new Book("Open Veins of Latin America", "Eduardo Galeano", "1971");
         book.setTitle("Soccer in Sun and Shadow");
 
-        assertEquals(book.getTitle(), "Soccer in Sun and Shadow");
+        assertEquals("Soccer in Sun and Shadow", book.getTitle());
     }
 
     @Test
     public void testGetAuthor() {
         Book book = new Book("Open Veins of Latin America", "Eduardo Galeano", "1971");
-        assertEquals(book.getAuthor(), "Eduardo Galeano");
+        assertEquals("Eduardo Galeano", book.getAuthor());
     }
 
     @Test
@@ -35,13 +35,13 @@ public class BookTest {
         Book book = new Book("Open Veins of Latin America", "Eduardo Galeano", "1971");
         book.setAuthor("Jose Saramago");
 
-        assertEquals(book.getAuthor(), "Jose Saramago");
+        assertEquals("Jose Saramago", book.getAuthor());
     }
 
     @Test
     public void testGetYear() {
         Book book = new Book("Open Veins of Latin America", "Eduardo Galeano", "1971");
-        assertEquals(book.getYear(), "1971");
+        assertEquals("1971", book.getYear());
     }
 
     @Test
@@ -49,13 +49,13 @@ public class BookTest {
         Book book = new Book("Open Veins of Latin America","Eduardo Galeano", "1971");
         book.setYear("2016");
 
-        assertEquals(book.getYear(), "2016");
+        assertEquals("2016", book.getYear());
     }
 
     @Test
     public void testIsCheckedOut() {
         Book book = new Book("Open Veins of Latin America","Eduardo Galeano", "1971");
-        assertEquals(book.isCheckedOut(), false);
+        assertEquals(false, book.isCheckedOut());
     }
 
     @Test
@@ -63,16 +63,16 @@ public class BookTest {
         Book book = new Book("Open Veins of Latin America","Eduardo Galeano", "1971");
         book.setCheckedOut(true);
 
-        assertEquals(book.isCheckedOut(), true);
+        assertEquals(true, book.isCheckedOut());
     }
 
     @Test
-    public void testBookAttributes() {
+    public void testToVector() {
         Book book = new Book("Open Veins of Latin America","Eduardo Galeano", "1971");
-        Vector<String> attributesVector = book.bookAttributes();
+        Vector<String> attributesVector = book.toVector();
 
-        assertEquals(attributesVector.get(0), "Open Veins of Latin America");
-        assertEquals(attributesVector.get(1), "Eduardo Galeano");
-        assertEquals(attributesVector.get(2), "1971");
+        assertEquals("Open Veins of Latin America", attributesVector.get(0));
+        assertEquals("Eduardo Galeano", attributesVector.get(1));
+        assertEquals("1971", attributesVector.get(2));
     }
 }

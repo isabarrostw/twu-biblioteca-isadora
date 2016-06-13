@@ -14,8 +14,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * Created by ibarros on 6/9/16.
  */
 public class WelcomeFrame extends JFrame {
-    private JTable bookTable;
-    private JScrollPane bookTableScrollPane;
     private JFrame booksFrame;
     private JFrame checkoutFrame;
     private JFrame returnFrame;
@@ -41,8 +39,8 @@ public class WelcomeFrame extends JFrame {
     }
 
     public void showBooksTable() {
-        bookTable = new JTable(data.getBooks(), data.getBookTableColumns());
-        bookTableScrollPane = new JScrollPane(bookTable);
+        JTable bookTable = new JTable(data.getNotCheckedOutBooksVector(), data.getBookTableColumns());
+        JScrollPane bookTableScrollPane = new JScrollPane(bookTable);
 
         bookTable.setFillsViewportHeight(true);
         booksFrame.add(bookTableScrollPane);
