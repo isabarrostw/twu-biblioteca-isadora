@@ -59,7 +59,24 @@ public class Data {
     }
 
     public void checkoutBook(String bookName) throws BookNotFoundException {
-        Iterator<Vector<String>> iterator = books.iterator();
+        try {
+            swapBookToVector(bookName, books, checkedOutBooks);
+        } catch (BookNotFoundException e) {
+            throw e;
+        }
+    }
+
+    public void returnBook(String bookName) throws BookNotFoundException {
+        try {
+            swapBookToVector(bookName, books, checkedOutBooks);
+        } catch (BookNotFoundException e) {
+            throw e;
+        }
+    }
+
+    private void swapBookToVector(String bookName, Vector<Vector<String>> originVector,
+                                  Vector<Vector<String>> destinationVector) throws BookNotFoundException {
+        Iterator<Vector<String>> iterator = originVector.iterator();
 
         boolean elementNotFound = true;
         Vector<String> bookToRemove = new Vector<String>();
@@ -71,15 +88,15 @@ public class Data {
 
             if(title.equals(bookName)) {
                 bookToRemove = book;
-                checkedOutBooks.add(bookToRemove);
+                destinationVector.add(bookToRemove);
                 elementNotFound = false;
             }
         }
 
         if(elementNotFound) {
-            throw new BookNotFoundException("That book is not available.");
+            throw new BookNotFoundException("Book not found");
         } else {
-            books.remove(bookToRemove);
+            originVector.remove(bookToRemove);
         }
     }
 }

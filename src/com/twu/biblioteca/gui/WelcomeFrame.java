@@ -65,11 +65,10 @@ public class WelcomeFrame extends JFrame {
                 try {
                     data.checkoutBook(bookTitleTextField.getText());
                     showMessageDialog(panel, "Thank you! Enjoy the book");
+                    bookTitleTextField.setText("");
                 } catch (BookNotFoundException exp) {
-                    showMessageDialog(panel, exp.getMessage());
+                    showMessageDialog(panel, "That book is not available.");
                 }
-
-                bookTitleTextField.setText("");
             }
         });
 
