@@ -1,15 +1,18 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.business.Data;
+import com.twu.biblioteca.business.Facade;
 import com.twu.biblioteca.gui.WelcomeFrame;
 
 public class BibliotecaApp {
     private WelcomeFrame welcomeFrame;
     private Data data;
+    private Facade facade;
 
     public BibliotecaApp() {
         data = new Data();
-        welcomeFrame = new WelcomeFrame(data);
+        facade = new Facade(data);
+        welcomeFrame = new WelcomeFrame(facade);
     }
 
     public void start() {

@@ -1,6 +1,6 @@
 package com.twu.biblioteca.gui;
 
-import com.twu.biblioteca.business.Data;
+import com.twu.biblioteca.business.Facade;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 
 import javax.swing.*;
@@ -17,10 +17,10 @@ public class WelcomeFrame extends JFrame {
     private JFrame booksFrame;
     private JFrame checkoutFrame;
     private JFrame returnFrame;
-    private Data data;
+    private Facade facade;
 
-    public WelcomeFrame(Data data) {
-        this.data = data;
+    public WelcomeFrame(Facade facade) {
+        this.facade = facade;
         setSize(600,400);
         setLocation(400,200);
         initializeComponents();
@@ -39,7 +39,7 @@ public class WelcomeFrame extends JFrame {
     }
 
     public void showBooksTable() {
-        JTable bookTable = new JTable(data.getNotCheckedOutBooksVector(), data.getBookTableColumns());
+        JTable bookTable = new JTable(facade.getNotCheckedOutBooksVector(), facade.getData().getBookTableColumns());
         JScrollPane bookTableScrollPane = new JScrollPane(bookTable);
 
         bookTable.setFillsViewportHeight(true);
@@ -66,9 +66,9 @@ public class WelcomeFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(action.equals("CHECKOUT")) {
-                        data.checkoutBook(bookTitleTextField.getText());
+                        facade.checkoutBook(bookTitleTextField.getText());
                     } else if(action.equals("RETURN")) {
-                        data.returnBook(bookTitleTextField.getText());
+                        facade.returnBook(bookTitleTextField.getText());
                     }
                     showMessageDialog(panel, successMessage);
                     bookTitleTextField.setText("");

@@ -18,6 +18,13 @@ public class Book {
         checkedOut = false;
     }
 
+    public Book(String title, String author, String year, boolean checkedOut) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.checkedOut = checkedOut;
+    }
+
     public String getTitle() {
         return title;
     }

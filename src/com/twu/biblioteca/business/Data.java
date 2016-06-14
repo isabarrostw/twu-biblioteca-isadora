@@ -35,41 +35,7 @@ public class Data {
         return bookTableColumns;
     }
 
-    public Vector<Vector<String>> getNotCheckedOutBooksVector() {
-        Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
-
-        Iterator<Book> iterator = books.iterator();
-        Book book;
-        while(iterator.hasNext()) {
-            book = iterator.next();
-
-            if(!book.isCheckedOut()) {
-                resultVector.add(book.toVector());
-            }
-        }
-
-        return resultVector;
-    }
-
-    public void checkoutBook(String bookName) throws BookNotFoundException {
-        try {
-            int index = findBookIndex(bookName, false);
-            books.get(index).setCheckedOut(true);
-        } catch (BookNotFoundException e) {
-            throw e;
-        }
-    }
-
-    public void returnBook(String bookName) throws BookNotFoundException {
-        try {
-            int index = findBookIndex(bookName, true);
-            books.get(index).setCheckedOut(false);
-        } catch (BookNotFoundException e) {
-            throw e;
-        }
-    }
-
-    private int findBookIndex(String bookTitle, boolean checkedOut) throws BookNotFoundException {
+    public int findBookIndex(String bookTitle, boolean checkedOut) throws BookNotFoundException {
         Iterator<Book> iterator = books.iterator();
 
         boolean bookFound = false;
