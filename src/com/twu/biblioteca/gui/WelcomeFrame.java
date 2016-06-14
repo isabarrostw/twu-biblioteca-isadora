@@ -14,7 +14,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * Created by ibarros on 6/9/16.
  */
 public class WelcomeFrame extends JFrame {
-    private JFrame booksFrame;
     private JFrame checkoutFrame;
     private JFrame returnFrame;
     private Facade facade;
@@ -30,7 +29,6 @@ public class WelcomeFrame extends JFrame {
         JLabel welcomeLabel = new JLabel("Welcome to Bangalore Public Library!", JLabel.CENTER);
         add(welcomeLabel);
         initializeMenu();
-        booksFrame = initializeFrame(450, 250, 500, 200);
         checkoutFrame = initializeFrame(500, 300, 450, 120);
         returnFrame = initializeFrame(500, 300, 450, 120);
         checkoutFrame.add(bookManagementPanel("CHECKOUT", "Thank you! Enjoy the book", "That book is not available."));
@@ -38,13 +36,12 @@ public class WelcomeFrame extends JFrame {
                 "That is not a valid book to return."));
     }
 
-    public void showBooksTable() {
-        JTable bookTable = new JTable(facade.getNotCheckedOutBooksVector(), facade.getData().getBookTableColumns());
-        JScrollPane bookTableScrollPane = new JScrollPane(bookTable);
-
-        bookTable.setFillsViewportHeight(true);
-        booksFrame.add(bookTableScrollPane);
-        booksFrame.setVisible(true);
+    public void showTableFrame(JTable table) {
+        table.setFillsViewportHeight(true);
+        JFrame frame = initializeFrame(450, 250, 500, 200);
+        JScrollPane tableScrollPane = new JScrollPane(table);
+        frame.add(tableScrollPane);
+        frame.setVisible(true);
     }
 
     public JFrame initializeFrame(int x, int y, int width, int length) {
@@ -86,17 +83,26 @@ public class WelcomeFrame extends JFrame {
 
     public void initializeMenu() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu menuListBooks = new JMenu("List Books");
-        JMenuItem menuAll = new JMenuItem("All");
+        JMenu menuList = new JMenu("List");
+        JMenuItem menuBooks = new JMenuItem("Books");
+        JMenuItem menuMovies = new JMenuItem("Movies");
         JMenuItem menuQuit = new JMenuItem("Quit");
         JMenu menuManageBooks = new JMenu("Manage Books");
         JMenuItem menuCheckout = new JMenuItem("Checkout Book");
         JMenuItem menuReturn = new JMenuItem("Return Book");
 
-        menuAll.addActionListener(new ActionListener() {
+        menuBooks.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showBooksTable();
+                JTable booksTable = new JTable(facade.getNotCheckedOutBooksVector(),
+                        facade.getData().getBookTableColumns());
+                showTableFrame(booksTable);
+            }
+        });
+        menuMovies.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO
             }
         });
         menuQuit.addActionListener(new ActionListener() {
@@ -118,11 +124,12 @@ public class WelcomeFrame extends JFrame {
             }
         });
 
-        menuListBooks.add(menuAll);
-        menuListBooks.add(menuQuit);
+        menuList.add(menuBooks);
+        menuList.add(menuMovies);
+        menuList.add(menuQuit);
         menuManageBooks.add(menuCheckout);
         menuManageBooks.add(menuReturn);
-        menuBar.add(menuListBooks);
+        menuBar.add(menuList);
         menuBar.add(menuManageBooks);
 
         setJMenuBar(menuBar);

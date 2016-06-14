@@ -29,6 +29,14 @@ public class Data {
         return bookTableColumns;
     }
 
+    public Vector<String> getMovieTableColumns() {
+        return movieTableColumns;
+    }
+
+    public Vector<Movie> getMovies() {
+        return movies;
+    }
+
     public int findBookIndex(String bookTitle, boolean checkedOut) throws BookNotFoundException {
         Iterator<Book> iterator = books.iterator();
 
@@ -71,6 +79,7 @@ public class Data {
         movieTableColumns = new Vector<String>();
         movieTableColumns.addAll(asList("Name", "Director(s)", "Year"));
 
+        movies = new Vector<Movie>();
         movies.add(new Movie("The Birds", "Alfred Hitchcock", "1963", 9));
         movies.add(new Movie("Persona", "Ingmar Bergman", "1966", 9));
         movies.add(new Movie("Aquarius", "Kleber Mendonca", "2016", 8));
