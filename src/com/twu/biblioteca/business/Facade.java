@@ -24,10 +24,10 @@ public class Facade {
 
         Iterator<Book> iterator = data.getBooks().iterator();
         Book book;
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             book = iterator.next();
 
-            if(!book.isCheckedOut()) {
+            if (!book.isCheckedOut()) {
                 resultVector.add(book.toVector());
             }
         }
@@ -36,20 +36,12 @@ public class Facade {
     }
 
     public void checkoutBook(String bookName) throws BookNotFoundException {
-        try {
-            int index = data.findBookIndex(bookName, false);
-            data.getBooks().get(index).setCheckedOut(true);
-        } catch (BookNotFoundException e) {
-            throw e;
-        }
+        int index = data.findBookIndex(bookName, false);
+        data.getBooks().get(index).setCheckedOut(true);
     }
 
     public void returnBook(String bookName) throws BookNotFoundException {
-        try {
-            int index = data.findBookIndex(bookName, true);
-            data.getBooks().get(index).setCheckedOut(false);
-        } catch (BookNotFoundException e) {
-            throw e;
-        }
+        int index = data.findBookIndex(bookName, true);
+        data.getBooks().get(index).setCheckedOut(false);
     }
 }
