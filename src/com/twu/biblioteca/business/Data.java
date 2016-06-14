@@ -12,19 +12,13 @@ import static java.util.Arrays.asList;
  */
 public class Data {
     private Vector<String> bookTableColumns;
+    private Vector<String> movieTableColumns;
     private Vector<Book> books;
+    private Vector<Movie> movies;
 
     public Data() {
-        bookTableColumns = new Vector<String>();
-        books = new Vector<Book>();
-        initializeData();
-    }
-
-    public void initializeData() {
-        bookTableColumns.addAll(asList("Title", "Author(s)", "Year"));
-        books.add(new Book("Java Head First", "Bert Bates, Kathy Sierra", "2003"));
-        books.add(new Book("Test-Driven Development by Example", "Kent Beck", "2003"));
-        books.add(new Book("The Agile Samurai", "Jonathan Rasmusson", "2010"));
+        initializeBooks();
+        initializeMovies();
     }
 
     public Vector<Book> getBooks() {
@@ -61,5 +55,24 @@ public class Data {
         } else {
             throw new BookNotFoundException("");
         }
+    }
+
+    private void initializeBooks() {
+        bookTableColumns = new Vector<String>();
+        bookTableColumns.addAll(asList("Title", "Author(s)", "Year"));
+
+        books = new Vector<Book>();
+        books.add(new Book("Java Head First", "Bert Bates, Kathy Sierra", "2003"));
+        books.add(new Book("Test-Driven Development by Example", "Kent Beck", "2003"));
+        books.add(new Book("The Agile Samurai", "Jonathan Rasmusson", "2010"));
+    }
+
+    private void initializeMovies() {
+        movieTableColumns = new Vector<String>();
+        movieTableColumns.addAll(asList("Name", "Director(s)", "Year"));
+
+        movies.add(new Movie("The Birds", "Alfred Hitchcock", "1963", 9));
+        movies.add(new Movie("Persona", "Ingmar Bergman", "1966", 9));
+        movies.add(new Movie("Aquarius", "Kleber Mendonca", "2016", 8));
     }
 }
