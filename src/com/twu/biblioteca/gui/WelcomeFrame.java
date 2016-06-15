@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
+import static java.util.Arrays.asList;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -94,8 +96,10 @@ public class WelcomeFrame extends JFrame {
         menuBooks.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JTable booksTable = new JTable(facade.getNotCheckedOutBooksVector(),
-                        facade.getData().getBookTableColumns());
+                Vector<String> columns = new Vector<String>();
+                columns.addAll(asList("Title", "Author(s)", "Year"));
+
+                JTable booksTable = new JTable(facade.getNotCheckedOutBooksVector(), columns);
                 showTableFrame(booksTable);
             }
         });
