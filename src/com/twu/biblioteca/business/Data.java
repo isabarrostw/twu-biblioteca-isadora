@@ -3,7 +3,6 @@ package com.twu.biblioteca.business;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -20,32 +19,46 @@ public class Data {
         return books;
     }
 
-    public int findBookIndex(String bookTitle, boolean checkedOut) throws BookNotFoundException {
-        Iterator<Book> iterator = books.iterator();
+    public List<Book> findAvailableBooks() {
+        List<Book> availableBooks = new ArrayList<Book>();
 
-        boolean bookFound = false;
-        Book currentBook;
-        String currentTitle;
-        int currentIndex = 0;
-        int returnIndex = 0;
-
-        while (iterator.hasNext()) {
-            currentBook = iterator.next();
-            currentTitle = currentBook.getTitle();
-
-            if(currentTitle.equals(bookTitle) && currentBook.isCheckedOut() == checkedOut) {
-                bookFound = true;
-                returnIndex = currentIndex;
+        for (Book book: books) {
+            if(!book.isCheckedOut()) {
+                availableBooks.add(book);
             }
-
-            currentIndex++;
         }
 
-        if(bookFound) {
-            return returnIndex;
+        return availableBooks;
+    }
+
+    public Book findAvailableBook(String bookTitle) throws BookNotFoundException {
+        Book book = findBook(bookTitle);
+
+        if(!book.isCheckedOut()) {
+            return book;
         } else {
             throw new BookNotFoundException("");
         }
+    }
+
+    public Book findCheckedOutBook(String bookTitle) throws BookNotFoundException {
+        Book book = findBook(bookTitle);
+
+        if(book.isCheckedOut()) {
+            return book;
+        } else {
+            throw new BookNotFoundException("");
+        }
+    }
+
+    private Book findBook(String bookTitle) throws BookNotFoundException {
+        for (Book book: books) {
+            if(book.getTitle().equals(bookTitle)) {
+                return book;
+            }
+        }
+
+        throw new BookNotFoundException("");
     }
 
     private void initializeBooks() {

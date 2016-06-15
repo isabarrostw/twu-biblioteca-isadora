@@ -3,6 +3,8 @@ package com.twu.biblioteca.business;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import static org.junit.Assert.assertEquals;
@@ -12,22 +14,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class FacadeTest {
     @Test
-    public void testGetNotCheckedOutBooksVector() {
-        Facade facade = facade();
-        facade.getData().getBooks().set(1, new Book("Open Veins of Latin America", "Eduardo Galeano", "1971", true));
-        Vector<Vector<String>> books = facade.getNotCheckedOutBooksVector();
-
-        assertEquals(2, books.size());
-        assertEquals("Java Head First", books.get(0).get(0));
-        assertEquals("The Agile Samurai", books.get(1).get(0));
-    }
-
-    @Test
     public void testCheckoutBook() throws BookNotFoundException {
         Facade facade = facade();
         facade.checkoutBook("Test-Driven Development by Example");
+        Book book = facade.findCheckedOutBook("Test-Driven Development by Example");
 
-        assertEquals(true, facade.getData().getBooks().get(1).isCheckedOut());
+        assertEquals("Test-Driven Development by Example", book.getTitle());
     }
 
     @Test
@@ -35,8 +27,20 @@ public class FacadeTest {
         Facade facade = facade();
         facade.checkoutBook("Test-Driven Development by Example");
         facade.returnBook("Test-Driven Development by Example");
+        Book book = facade.findAvailableBook("Test-Driven Development by Example");
 
-        assertEquals(false, facade.getData().getBooks().get(1).isCheckedOut());
+        assertEquals("Test-Driven Development by Example", book.getTitle());
+    }
+
+    @Test
+    public void testFindAvailableBooks() throws BookNotFoundException {
+        Facade facade = facade();
+        facade.checkoutBook("Test-Driven Development by Example");
+        List<Book> books = facade.findAvailableBooks();
+
+        assertEquals(2, books.size());
+        assertEquals("Java Head First", books.get(0).getTitle());
+        assertEquals("The Agile Samurai", books.get(1).getTitle());
     }
 
     private Facade facade() {

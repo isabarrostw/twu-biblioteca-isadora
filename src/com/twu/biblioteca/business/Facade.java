@@ -2,8 +2,7 @@ package com.twu.biblioteca.business;
 
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Created by ibarros on 6/14/16.
@@ -15,33 +14,23 @@ public class Facade {
         this.data = data;
     }
 
-    public Data getData() {
-        return data;
+    public List<Book> findAvailableBooks() {
+        return data.findAvailableBooks();
     }
 
-    public Vector<Vector<String>> getNotCheckedOutBooksVector() {
-        Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
-
-        Iterator<Book> iterator = data.getBooks().iterator();
-        Book book;
-        while (iterator.hasNext()) {
-            book = iterator.next();
-
-            if (!book.isCheckedOut()) {
-                resultVector.add(book.toVector());
-            }
-        }
-
-        return resultVector;
+    public Book findAvailableBook(String bookTitle) throws BookNotFoundException {
+        return data.findAvailableBook(bookTitle);
     }
 
-    public void checkoutBook(String bookName) throws BookNotFoundException {
-        int index = data.findBookIndex(bookName, false);
-        data.getBooks().get(index).setCheckedOut(true);
+    public Book findCheckedOutBook(String bookTitle) throws BookNotFoundException {
+        return data.findCheckedOutBook(bookTitle);
     }
 
-    public void returnBook(String bookName) throws BookNotFoundException {
-        int index = data.findBookIndex(bookName, true);
-        data.getBooks().get(index).setCheckedOut(false);
+    public void checkoutBook(String bookTitle) throws BookNotFoundException {
+        data.findAvailableBook(bookTitle).checkout();
+    }
+
+    public void returnBook(String bookTitle) throws BookNotFoundException {
+        data.findCheckedOutBook(bookTitle).returnToShelf();
     }
 }

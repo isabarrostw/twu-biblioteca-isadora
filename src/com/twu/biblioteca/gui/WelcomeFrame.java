@@ -1,5 +1,6 @@
 package com.twu.biblioteca.gui;
 
+import com.twu.biblioteca.business.Book;
 import com.twu.biblioteca.business.Facade;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 
@@ -7,9 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.util.List;
 
-import static java.util.Arrays.asList;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -96,10 +96,8 @@ public class WelcomeFrame extends JFrame {
         menuBooks.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Vector<String> columns = new Vector<String>();
-                columns.addAll(asList("Title", "Author(s)", "Year"));
-
-                JTable booksTable = new JTable(facade.getNotCheckedOutBooksVector(), columns);
+                String[] columns = {"Title", "Author(s)", "Year"};
+                JTable booksTable = new JTable(availableBooks(facade.findAvailableBooks()), columns);
                 showTableFrame(booksTable);
             }
         });
@@ -137,5 +135,20 @@ public class WelcomeFrame extends JFrame {
         menuBar.add(menuManageBooks);
 
         setJMenuBar(menuBar);
+    }
+
+    private String[][] availableBooks(List<Book> books) {
+        String[][] bidimensionalArray = new String[books.size()][3];
+
+        for (int i = 0; i < books.size(); i++) {
+            bidimensionalArray[i] = toArray(books.get(i));
+        }
+
+        return bidimensionalArray;
+    }
+
+    public String[] toArray(Book book) {
+        String[] array = { book.getTitle(), book.getAuthor(), book.getYear() };
+        return array;
     }
 }

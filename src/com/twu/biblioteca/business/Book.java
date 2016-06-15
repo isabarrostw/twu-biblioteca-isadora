@@ -18,32 +18,27 @@ public class Book {
         checkedOut = false;
     }
 
-    public Book(String title, String author, String year, boolean checkedOut) {
-        this.title = title;
-        this.author = author;
-        this.year = year;
-        this.checkedOut = checkedOut;
-    }
-
     public String getTitle() {
         return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getYear() {
+        return year;
     }
 
     public boolean isCheckedOut() {
         return checkedOut;
     }
 
-    public void setCheckedOut(boolean checkedOut) {
-        this.checkedOut = checkedOut;
+    public void checkout() {
+        checkedOut = true;
     }
 
-    public Vector<String> toVector() {
-        Vector<String> attributesVector = new Vector<String>();
-
-        attributesVector.add(title);
-        attributesVector.add(author);
-        attributesVector.add(year);
-
-        return attributesVector;
+    public void returnToShelf() {
+        checkedOut = false;
     }
 }
