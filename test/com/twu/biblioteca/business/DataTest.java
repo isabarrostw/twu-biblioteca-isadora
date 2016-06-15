@@ -1,6 +1,7 @@
 package com.twu.biblioteca.business;
 
 import com.twu.biblioteca.exceptions.BookNotFoundException;
+import com.twu.biblioteca.exceptions.MovieNotFoundException;
 import org.junit.Test;
 
 import java.util.List;
@@ -36,5 +37,17 @@ public class DataTest {
         assertEquals(2, books.size());
         assertEquals("Java Head First", books.get(0).getTitle());
         assertEquals("The Agile Samurai", books.get(1).getTitle());
+    }
+
+    @Test
+    public void testFindAvailableMovies() {
+        Data data = new Data();
+        data.getMovies().get(1).checkout();
+
+        List<Movie> movies = data.findAvailableMovies();
+
+        assertEquals(2, movies.size());
+        assertEquals("The Birds", movies.get(0).getName());
+        assertEquals("Aquarius", movies.get(1).getName());
     }
 }

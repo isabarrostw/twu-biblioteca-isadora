@@ -2,6 +2,7 @@ package com.twu.biblioteca.gui;
 
 import com.twu.biblioteca.business.Book;
 import com.twu.biblioteca.business.Facade;
+import com.twu.biblioteca.business.Movie;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
 
 import javax.swing.*;
@@ -104,7 +105,9 @@ public class WelcomeFrame extends JFrame {
         menuMovies.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                String[] columns = {"Name", "Director(s)", "Year", "Rating"};
+                JTable moviesTable = new JTable(availableMovies(facade.findAvailableMovies()), columns);
+                showTableFrame(moviesTable);
             }
         });
         menuQuit.addActionListener(new ActionListener() {
@@ -149,6 +152,21 @@ public class WelcomeFrame extends JFrame {
 
     public String[] toArray(Book book) {
         String[] array = { book.getTitle(), book.getAuthor(), book.getYear() };
+        return array;
+    }
+
+    private String[][] availableMovies(List<Movie> movies) {
+        String[][] bidimensionalArray = new String[movies.size()][4];
+
+        for (int i = 0; i < movies.size(); i++) {
+            bidimensionalArray[i] = toArray(movies.get(i));
+        }
+
+        return bidimensionalArray;
+    }
+
+    public String[] toArray(Movie movie) {
+        String[] array = { movie.getName(), movie.getDirector(), movie.getYear(), movie.getRating() + "" };
         return array;
     }
 }

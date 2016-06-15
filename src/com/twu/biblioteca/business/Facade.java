@@ -1,6 +1,7 @@
 package com.twu.biblioteca.business;
 
 import com.twu.biblioteca.exceptions.BookNotFoundException;
+import com.twu.biblioteca.exceptions.MovieNotFoundException;
 
 import java.util.List;
 
@@ -32,5 +33,13 @@ public class Facade {
 
     public void returnBook(String bookTitle) throws BookNotFoundException {
         data.findCheckedOutBook(bookTitle).returnToShelf();
+    }
+
+    public List<Movie> findAvailableMovies() {
+        return data.findAvailableMovies();
+    }
+
+    public void checkoutMovie(String movieName) throws MovieNotFoundException {
+        data.findAvailableMovie(movieName).checkout();
     }
 }
