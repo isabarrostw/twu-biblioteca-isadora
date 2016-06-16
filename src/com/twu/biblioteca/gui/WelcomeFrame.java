@@ -4,6 +4,7 @@ import com.twu.biblioteca.business.Book;
 import com.twu.biblioteca.business.Facade;
 import com.twu.biblioteca.business.Movie;
 import com.twu.biblioteca.exceptions.BookNotFoundException;
+import com.twu.biblioteca.exceptions.MovieNotFoundException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class WelcomeFrame extends JFrame {
     private JFrame checkoutFrame;
     private JFrame returnFrame;
+    private JFrame checkoutMovieFrame;
     private Facade facade;
 
     public WelcomeFrame(Facade facade) {
@@ -34,9 +36,11 @@ public class WelcomeFrame extends JFrame {
         initializeMenu();
         checkoutFrame = initializeFrame(500, 300, 450, 120);
         returnFrame = initializeFrame(500, 300, 450, 120);
-        checkoutFrame.add(bookManagementPanel("CHECKOUT", "Thank you! Enjoy the book", "That book is not available."));
-        returnFrame.add(bookManagementPanel("RETURN", "Thank you for returning the book.",
+        checkoutMovieFrame = initializeFrame(500, 300, 450, 120);
+        checkoutFrame.add(resourceManagementPanel("Book", "CHECKOUT", "Thank you! Enjoy the book", "That book is not available."));
+        returnFrame.add(resourceManagementPanel("Book", "RETURN", "Thank you for returning the book.",
                 "That is not a valid book to return."));
+        checkoutMovieFrame.add(resourceManagementPanel("Movie", "CHECKOUT", "Thank you! Enjoy the movie", "That movie is not available."));
     }
 
     public void showTableFrame(JTable table) {
@@ -54,9 +58,10 @@ public class WelcomeFrame extends JFrame {
         return frame;
     }
 
-    public JPanel bookManagementPanel(final String action, final String successMessage, final String failureMessage) {
+    public JPanel resourceManagementPanel(final String resourceName, final String action, final String successMessage,
+                                          final String failureMessage) {
         final JPanel panel = new JPanel();
-        JLabel bookTitleLabel = new JLabel("Book title: ");
+        JLabel bookTitleLabel = new JLabel(resourceName + " title: ");
         final JTextField bookTitleTextField = new JTextField(30);
         bookTitleTextField.setMinimumSize(new Dimension(100, 40));
         JButton checkoutButton = new JButton(action);
@@ -66,13 +71,18 @@ public class WelcomeFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(action.equals("CHECKOUT")) {
-                        facade.checkoutBook(bookTitleTextField.getText());
+                        if (resourceName.equals("Book"))
+                            facade.checkoutBook(bookTitleTextField.getText());
+                        else if(resourceName.equals("Movie"))
+                            facade.checkoutMovie(bookTitleTextField.getText());
                     } else if(action.equals("RETURN")) {
                         facade.returnBook(bookTitleTextField.getText());
                     }
                     showMessageDialog(panel, successMessage);
                     bookTitleTextField.setText("");
                 } catch (BookNotFoundException exp) {
+                    showMessageDialog(panel, failureMessage);
+                } catch (MovieNotFoundException exp) {
                     showMessageDialog(panel, failureMessage);
                 }
             }
@@ -93,6 +103,8 @@ public class WelcomeFrame extends JFrame {
         JMenu menuManageBooks = new JMenu("Manage Books");
         JMenuItem menuCheckout = new JMenuItem("Checkout Book");
         JMenuItem menuReturn = new JMenuItem("Return Book");
+        JMenu menuManageMovies = new JMenu("Manage Movies");
+        JMenuItem menuCheckoutMovie = new JMenuItem("Checkout Movie");
 
         menuBooks.addActionListener(new ActionListener() {
             @Override
@@ -128,14 +140,22 @@ public class WelcomeFrame extends JFrame {
                 returnFrame.setVisible(true);
             }
         });
+        menuCheckoutMovie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkoutMovieFrame.setVisible(true);
+            }
+        });
 
         menuList.add(menuBooks);
         menuList.add(menuMovies);
         menuList.add(menuQuit);
         menuManageBooks.add(menuCheckout);
         menuManageBooks.add(menuReturn);
+        menuManageMovies.add(menuCheckoutMovie);
         menuBar.add(menuList);
         menuBar.add(menuManageBooks);
+        menuBar.add(menuManageMovies);
 
         setJMenuBar(menuBar);
     }
