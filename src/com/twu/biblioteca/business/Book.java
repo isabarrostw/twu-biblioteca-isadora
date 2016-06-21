@@ -1,11 +1,11 @@
 package com.twu.biblioteca.business;
 
-import java.util.Vector;
+import com.twu.biblioteca.exceptions.BookNotFoundException;
 
 /**
  * Created by ibarros on 6/13/16.
  */
-public class Book {
+public class Book implements Resource {
     private String title;
     private String author;
     private String year;
@@ -34,11 +34,19 @@ public class Book {
         return checkedOut;
     }
 
-    public void checkout() {
-        checkedOut = true;
+    public void checkout() throws BookNotFoundException {
+        if(!checkedOut) {
+            checkedOut = true;
+        } else {
+            throw new BookNotFoundException("");
+        }
     }
 
-    public void returnToShelf() {
-        checkedOut = false;
+    public void returnToShelf() throws BookNotFoundException {
+        if(checkedOut) {
+            checkedOut = false;
+        } else {
+            throw new BookNotFoundException("");
+        }
     }
 }

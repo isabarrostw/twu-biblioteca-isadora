@@ -186,7 +186,7 @@ public class WelcomeFrame extends JFrame {
     }
 
     public String[] toArray(Movie movie) {
-        String[] array = { movie.getName(), movie.getDirector(), movie.getYear(), movie.getRating() + "" };
+        String[] array = { movie.getTitle(), movie.getDirector(), movie.getYear(), movie.getRating() + "" };
         return array;
     }
 }

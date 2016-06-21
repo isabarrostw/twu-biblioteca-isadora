@@ -19,20 +19,12 @@ public class Facade {
         return data.findAvailableBooks();
     }
 
-    public Book findAvailableBook(String bookTitle) throws BookNotFoundException {
-        return data.findAvailableBook(bookTitle);
-    }
-
-    public Book findCheckedOutBook(String bookTitle) throws BookNotFoundException {
-        return data.findCheckedOutBook(bookTitle);
-    }
-
     public void checkoutBook(String bookTitle) throws BookNotFoundException {
-        data.findAvailableBook(bookTitle).checkout();
+        data.findBook(bookTitle).checkout();
     }
 
     public void returnBook(String bookTitle) throws BookNotFoundException {
-        data.findCheckedOutBook(bookTitle).returnToShelf();
+        data.findBook(bookTitle).returnToShelf();
     }
 
     public List<Movie> findAvailableMovies() {
@@ -40,6 +32,6 @@ public class Facade {
     }
 
     public void checkoutMovie(String movieName) throws MovieNotFoundException {
-        data.findAvailableMovie(movieName).checkout();
+        data.findMovie(movieName).checkout();
     }
 }

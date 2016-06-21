@@ -1,25 +1,27 @@
 package com.twu.biblioteca.business;
 
+import com.twu.biblioteca.exceptions.MovieNotFoundException;
+
 /**
  * Created by ibarros on 6/14/16.
  */
-public class Movie {
-    private String name;
+public class Movie implements Resource{
+    private String title;
     private String year;
     private String director;
     private int rating;
     private boolean checkedOut;
 
-    public Movie(String name, String director, String year, int rating) {
-        this.name = name;
+    public Movie(String title, String director, String year, int rating) {
+        this.title = title;
         this.director = director;
         this.year = year;
         this.rating = rating;
         checkedOut = false;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getYear() {
@@ -38,7 +40,11 @@ public class Movie {
         return checkedOut;
     }
 
-    public void checkout() {
-        checkedOut = true;
+    public void checkout() throws MovieNotFoundException {
+        if(!checkedOut) {
+            checkedOut = true;
+        } else {
+            throw new MovieNotFoundException("");
+        }
     }
 }

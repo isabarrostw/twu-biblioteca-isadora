@@ -15,25 +15,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class FacadeTest {
     @Test
-    public void testCheckoutBook() throws BookNotFoundException {
-        Facade facade = facade();
-        facade.checkoutBook("Test-Driven Development by Example");
-        Book book = facade.findCheckedOutBook("Test-Driven Development by Example");
-
-        assertEquals("Test-Driven Development by Example", book.getTitle());
-    }
-
-    @Test
-    public void testReturnBook() throws BookNotFoundException {
-        Facade facade = facade();
-        facade.checkoutBook("Test-Driven Development by Example");
-        facade.returnBook("Test-Driven Development by Example");
-        Book book = facade.findAvailableBook("Test-Driven Development by Example");
-
-        assertEquals("Test-Driven Development by Example", book.getTitle());
-    }
-
-    @Test
     public void testFindAvailableBooks() throws BookNotFoundException {
         Facade facade = facade();
         facade.checkoutBook("Test-Driven Development by Example");
@@ -51,8 +32,8 @@ public class FacadeTest {
         List<Movie> movies = facade.findAvailableMovies();
 
         assertEquals(2, movies.size());
-        assertEquals("The Birds", movies.get(0).getName());
-        assertEquals("Aquarius", movies.get(1).getName());
+        assertEquals("The Birds", movies.get(0).getTitle());
+        assertEquals("Aquarius", movies.get(1).getTitle());
     }
 
     private Facade facade() {
